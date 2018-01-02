@@ -1,0 +1,1 @@
+typeSearchIndex = [{"p":"net.jangaroo.smartsprites.maven","l":"HelpMojo"},{"p":"net.jangaroo.smartsprites.maven","l":"SmartSpritesMojo"}]
