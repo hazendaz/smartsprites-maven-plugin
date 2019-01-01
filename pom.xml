@@ -41,7 +41,7 @@
     </licenses>
 
     <prerequisites>
-        <maven>3.0.1</maven>
+        <maven>3.5.2</maven>
     </prerequisites>
 
     <scm>
