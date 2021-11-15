@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright (c) 2012-2018 Hazendaz.
+    Copyright (c) 2012-2021 Hazendaz.
 
     All rights reserved. This program and the accompanying materials
     are made available under the terms of The Apache Software License,
@@ -60,9 +60,9 @@
     </ciManagement>
     <distributionManagement>
         <site>
-            <id>gh-pages</id>
+            <id>gh-pages-scm</id>
             <name>GitHub Pages</name>
-            <url>github:https://hazendaz.github.io/smartsprites-maven-plugin/</url>
+            <url>scm:git:ssh://github.com/hazendaz/smartsprites-maven-plugin.git</url>
         </site>
     </distributionManagement>
 
