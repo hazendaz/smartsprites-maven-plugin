@@ -80,6 +80,12 @@
             <version>3.6.1</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.codehaus.plexus</groupId>
+            <artifactId>plexus-utils</artifactId>
+            <version>3.4.1</version>
+            <scope>compile</scope>
+        </dependency>
 
         <!-- Smart Sprites -->
         <dependency>
