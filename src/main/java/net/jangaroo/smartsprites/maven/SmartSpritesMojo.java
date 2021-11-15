@@ -168,7 +168,7 @@ public class SmartSpritesMojo extends AbstractMojo {
      * To enable skipping run of plugin.
      */
     @Parameter(defaultValue = "false", alias = "skip", property = "skip")
-    private Boolean             skip;
+    private boolean             skip;
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
