@@ -1,5 +1,5 @@
-/**
- * Copyright (c) 2012-2017 Hazendaz.
+/*
+ * Copyright (c) 2012-2021 Hazendaz.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of The Apache Software License,
@@ -38,7 +38,7 @@ import org.carrot2.labs.smartsprites.message.PrintStreamMessageSink;
 public class SmartSpritesMojo extends AbstractMojo {
 
     /** The static root directory mode. */
-    private static final String ROOT_DIR_MODE  = "rootDirMode";
+    private static final String ROOT_DIR_MODE = "rootDirMode";
 
     /** The static css files mode. */
     private static final String CSS_FILES_MODE = "cssFilesMode";
@@ -54,7 +54,7 @@ public class SmartSpritesMojo extends AbstractMojo {
      *
      */
     @Parameter(defaultValue = "${project.basedir}/src/main/sprites", property = "rootDirPath")
-    private File                rootDirPath;
+    private File rootDirPath;
 
     /**
      * Paths of CSS files to process, required if root-dir-path not specified, default: not specified.
@@ -72,7 +72,7 @@ public class SmartSpritesMojo extends AbstractMojo {
      * elements. Please see the build.xml file in the distribution archive for an example.
      */
     @Parameter(property = "cssFiles")
-    private List<File>          cssFiles;
+    private List<File> cssFiles;
 
     /**
      * Output directory for processed CSS files and CSS-relative sprite images, optional, default: not specified.
@@ -90,7 +90,7 @@ public class SmartSpritesMojo extends AbstractMojo {
      * using a non-empty output-dir-path, you might want to use an empty css-file-suffix.
      */
     @Parameter(defaultValue = "${project.build.directory}/generated-resources/META-INF/resources/spritesheets", property = "outPutDirPath")
-    private File                outputDirPath;
+    private File outputDirPath;
 
     /**
      * Document root path for document-root-relative (starting with /) image urls in CSS, optional, default: not
@@ -102,7 +102,7 @@ public class SmartSpritesMojo extends AbstractMojo {
      * relative, it will be resolved against the current working directory.
      */
     @Parameter(property = "documentRootDirPath")
-    private File                documentRootDirPath;
+    private File documentRootDirPath;
 
     /**
      * Message logging level, optional, default: WARN.
@@ -114,7 +114,7 @@ public class SmartSpritesMojo extends AbstractMojo {
      * sprite-based designs look broken
      */
     @Parameter(defaultValue = "WARN", property = "logLevel")
-    private String              logLevel;
+    private String logLevel;
 
     /**
      * Color depth of sprites in the PNG format, optional, default: AUTO. AUTO: PNG color depth will be chosen
@@ -125,7 +125,7 @@ public class SmartSpritesMojo extends AbstractMojo {
      * warnings will be issued. See also the sprite-matte-color property.
      */
     @Parameter(defaultValue = "AUTO", property = "spritePngDepth")
-    private String              spritePngDepth;
+    private String spritePngDepth;
 
     /**
      * Enables generation of IE6-friendly sprite images, optional, default: disabled.
@@ -141,20 +141,20 @@ public class SmartSpritesMojo extends AbstractMojo {
      * See also the sprite-matte-color property.
      */
     @Parameter(defaultValue = "false", property = "spritePngIeSix")
-    private boolean             spritePngIeSix;
+    private boolean spritePngIeSix;
 
     /**
      * The encoding to assume for input and output CSS files, default: UTF-8. For the list of allowed values, please see
      * the list of encodings supported in Java.
      */
     @Parameter(defaultValue = "UTF-8", property = "cssFileEncoding")
-    private String              cssFileEncoding;
+    private String cssFileEncoding;
 
     /**
      * Suffix to be appended to the processed CSS file name, optional, default: .
      */
     @Parameter(defaultValue = "", property = "cssFileSuffix")
-    private String              cssFileSuffix;
+    private String cssFileSuffix;
 
     /**
      * To make sure the different modes are working correctly a mode has to be specified. Modes: - rootDirMode (rootDir
@@ -162,13 +162,13 @@ public class SmartSpritesMojo extends AbstractMojo {
      * cssFilesWithOutputDirMode (cssFiles are set, as well as rootDir and outputDir)
      */
     @Parameter(defaultValue = SmartSpritesMojo.ROOT_DIR_MODE, property = "workingMode")
-    private String              workingMode;
+    private String workingMode;
 
     /**
      * To enable skipping run of plugin.
      */
     @Parameter(defaultValue = "false", alias = "skip", property = "skip")
-    private boolean             skip;
+    private boolean skip;
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
@@ -262,11 +262,9 @@ public class SmartSpritesMojo extends AbstractMojo {
         }
 
         // Configure the SmartSpritesParameters for execution
-        SmartSpritesParameters smartParameters;
-
-        smartParameters = new SmartSpritesParameters(rootDirPathTemp, cssFilesTemp, outputDirPathTemp,
-                documentRootDirPathTemp, msgLogLevel, this.cssFileSuffix, pngDepth, this.spritePngIeSix,
-                this.cssFileEncoding);
+        SmartSpritesParameters smartParameters = new SmartSpritesParameters(rootDirPathTemp, cssFilesTemp,
+                outputDirPathTemp, documentRootDirPathTemp, msgLogLevel, this.cssFileSuffix, pngDepth,
+                this.spritePngIeSix, this.cssFileEncoding);
 
         final MessageLog messageLog = new MessageLog(
                 new PrintStreamMessageSink(System.out, smartParameters.getLogLevel()));
