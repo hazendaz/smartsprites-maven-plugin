@@ -7,7 +7,7 @@ SmartSprites Maven plugin
 
 ![hazendaz](src/site/resources/images/hazendaz-banner.jpg)
 
-Maven Plugin for the open-source tool smartsprites (http://csssprites.org/).
+Maven Plugin for the open-source tool smartsprites (https://github.com/carrotsearch/smartsprites/wiki/Documentation).
 It allows you the integration of the generation of spritesheets in your build process.
 
 ### NOTICE ###
