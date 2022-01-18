@@ -55,8 +55,8 @@
         <url>https://github.com/hazendaz/smartsprites-maven-plugin/issues</url>
     </issueManagement>
     <ciManagement>
-        <system>Travis CI</system>
-        <url>https://travis-ci.org/hazendaz/smartsprites-maven-plugin</url>
+        <system>Github</system>
+        <url>https://github.com/hazendaz/smartsprites-maven-plugin/actions</url></url>
     </ciManagement>
     <distributionManagement>
         <site>
