@@ -1,7 +1,7 @@
 SmartSprites Maven plugin
 =========================
 
-[![Build Status](https://travis-ci.org/hazendaz/smartsprites-maven-plugin.svg?branch=master)](https://travis-ci.org/hazendaz/smartsprites-maven-plugin)
+[![Java CI](https://github.com/hazendaz/smartsprites-maven-plugin/workflows/Java%20CI/badge.svg)](https://github.com/hazendaz/smartsprites-maven-plugin/actions?query=workflow%3A%22Java+CI%22)
 [![Maven central](https://maven-badges.herokuapp.com/maven-central/com.github.hazendaz.maven/smartsprites-maven-plugin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.hazendaz.maven/smartsprites-maven-plugin)
 [![License](http://img.shields.io/badge/license-Apache%202-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
