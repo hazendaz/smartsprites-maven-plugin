@@ -1,1 +1,1 @@
-typeSearchIndex = [{"p":"net.jangaroo.smartsprites.maven","l":"HelpMojo"},{"p":"net.jangaroo.smartsprites.maven","l":"SmartSpritesMojo"}]
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"net.jangaroo.smartsprites.maven","l":"HelpMojo"},{"p":"net.jangaroo.smartsprites.maven","l":"SmartSpritesMojo"}];updateSearchResults();

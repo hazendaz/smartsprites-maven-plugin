@@ -23,11 +23,11 @@ under the License.
     <link>http://github.com/hazendaz/smartsprites-maven-plugin</link>
     <description>smartsprites-maven-plugin - Checkstyle report</description>
     <language>en-us</language>
-    <copyright>&#169;2012 - 2018 hazendaz</copyright>
+    <copyright>&#169;2012 - 2022 hazendaz</copyright>
     <item>
       <title>File: 2,
              Errors: 0,
-             Warnings: 829,
+             Warnings: 679,
              Infos: 0
       </title>
             <link>http://github.com/hazendaz/smartsprites-maven-plugin/checkstyle.html</link>
@@ -52,7 +52,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  102
+                  115
                 </td>
                 <td>
                   0
@@ -66,7 +66,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  727
+                  564
                 </td>
                 <td>
                   0

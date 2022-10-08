@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"net.jangaroo.smartsprites.maven"}]
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"net.jangaroo.smartsprites.maven"}];updateSearchResults();
