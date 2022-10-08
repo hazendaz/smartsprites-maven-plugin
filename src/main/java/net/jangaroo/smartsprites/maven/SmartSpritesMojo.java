@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2021 Hazendaz.
+ * Copyright (c) 2012-2022 Hazendaz.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of The Apache Software License,
@@ -31,7 +31,7 @@ import org.carrot2.labs.smartsprites.message.PrintStreamMessageSink;
 /**
  * Goal which creates Spritesheets from given css and image files Explanation of every variable is taken directly from
  * the smartsprites documentation (http://csssprites.org/)
- *
+ * <p>
  * For further information on the use of smartsprites please refer to: http://csssprites.org/
  */
 @Mojo(name = "smartsprites", defaultPhase = LifecyclePhase.GENERATE_RESOURCES, requiresProject = false, threadSafe = true)
@@ -46,28 +46,27 @@ public class SmartSpritesMojo extends AbstractMojo {
     /**
      * Directory in which SmartSprites processing should be done, required if css-files not specified or if
      * output-dir-path specified, default: not specified.
-     *
+     * <p>
      * SmartSprites will process all files with the *.css extension found in root-dir-path or any subdirectory of it.
      * For more fine-grained control over the processed CSS files, see the css-files option.
-     *
+     * <p>
      * If the provided root directory path is relative, it will be resolved against the current working directory.
-     *
      */
     @Parameter(defaultValue = "${project.basedir}/src/main/sprites", property = "rootDirPath")
     private File rootDirPath;
 
     /**
      * Paths of CSS files to process, required if root-dir-path not specified, default: not specified.
-     *
+     * <p>
      * SmartSprites will process all CSS files listed using this option. If css-files is to be used together with
      * output-dir-path, root-dir-path must also be specified so that SmartSprites can preserve the directory structure
      * found in root-dir-path in output-dir-path. If root-dir-path and output-dir-path are used, css-files outside of
      * root-dir-path will be ignored.
-     *
+     * <p>
      * Relative CSS file paths provided using this option will be resolved against the current working directory. Please
      * note that SmartSprites will not expand any wildcards (like style/*.css), it assumes the expansion is performed at
      * the command line shell level.
-     *
+     * <p>
      * To specify the list of CSS files to process in the SmartSprites Ant task, use one or more nested fileset
      * elements. Please see the build.xml file in the distribution archive for an example.
      */
@@ -76,7 +75,7 @@ public class SmartSpritesMojo extends AbstractMojo {
 
     /**
      * Output directory for processed CSS files and CSS-relative sprite images, optional, default: not specified.
-     *
+     * <p>
      * If a non-empty output-dir-path is specified, a non-empty root-dir-path must also be provided. The directory
      * structure relative to the root-dir-path will be preserved in the output directory. E.g. if CSS files are
      * contained in the css/base directory of root-dir-path, the processed results will be written to
@@ -84,7 +83,7 @@ public class SmartSpritesMojo extends AbstractMojo {
      * with document-root-relative URLs will be written relative to the document-root-dir-path. If the output-dir-path
      * directory does not exist, it will be created. If the provided output directory path is relative, it will be
      * resolved against the current working directory.
-     *
+     * <p>
      * You can leave the output-dir-path empty, in which case the CSS files will be written next to the original CSS
      * files with the css-file-suffix, and sprite images will be written relative to the original CSS files. If you are
      * using a non-empty output-dir-path, you might want to use an empty css-file-suffix.
@@ -95,7 +94,7 @@ public class SmartSpritesMojo extends AbstractMojo {
     /**
      * Document root path for document-root-relative (starting with /) image urls in CSS, optional, default: not
      * specified.
-     *
+     * <p>
      * All document-root-relative image and sprite URLs will be taken relative to document-root-dir-path. Also
      * document-root-relative sprite URLs will be written relative to document-root-dir-path. You can leave this
      * property empty if your CSS uses only CSS-relative image URLs. If the provided document root directory path is
@@ -106,7 +105,7 @@ public class SmartSpritesMojo extends AbstractMojo {
 
     /**
      * Message logging level, optional, default: WARN.
-     *
+     * <p>
      * Messages less important than log-level will not be shown. SmartSprites has 3 levels of log messages (in the
      * increasing order of importance): INFO: information messages, can be safely ignored IE6NOTICE: notices related to
      * possible quality loss when creating IE6-friendly sprite images, see also the IE6-friendly PNG option WARN:
@@ -129,15 +128,15 @@ public class SmartSpritesMojo extends AbstractMojo {
 
     /**
      * Enables generation of IE6-friendly sprite images, optional, default: disabled.
-     *
+     * <p>
      * If sprite-png-ie6 is specified, for each PNG sprite image with partial transparencies (alpha channel) or more
      * than 255 colors and any transparencies, SmartSprites will generate a corresponding color-reduced PNG8 file for
      * IE6.
-     *
+     * <p>
      * An extra IE6-only CSS rule will be added to the generated CSS file to ensure that IE6 (and only IE6) uses the
      * color-reduced version: #web { width: 17px; height: 17px; background-repeat: no-repeat; background-image:
      * url('../img/mysprite.png'); -background-image: url('../img/mysprite-ie6.png'); background-position: left -0px; }
-     *
+     * <p>
      * See also the sprite-matte-color property.
      */
     @Parameter(defaultValue = "false", property = "spritePngIeSix")
