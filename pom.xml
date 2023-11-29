@@ -130,7 +130,7 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-plugin-plugin</artifactId>
+                <artifactId>maven-plugin-report-plugin</artifactId>
                 <version>3.10.2</version>
             </plugin>
         </plugins>
