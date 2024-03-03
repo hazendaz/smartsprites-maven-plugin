@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<licensePluginReport goal="FORMAT" timestamp="1709503372893">
+    <module artifactId="smartsprites-maven-plugin" groupId="com.github.hazendaz.maven" version="2.1.4-SNAPSHOT"/>
+    <files>
+        <file path=".mvn\extensions.xml" result="NOOP"/>
+        <file path=".mvn\settings.xml" result="NOOP"/>
+        <file path="format.xml" result="NOOP"/>
+        <file path="pom.xml" result="NOOP"/>
+        <file path="src\main\java\net\jangaroo\smartsprites\maven\SmartSpritesMojo.java" result="NOOP"/>
+        <file path="src\main\resources\META-INF\m2e\lifecycle-mapping-metadata.xml" result="NOOP"/>
+        <file path="src\site\site.xml" result="NOOP"/>
+    </files>
+</licensePluginReport>
