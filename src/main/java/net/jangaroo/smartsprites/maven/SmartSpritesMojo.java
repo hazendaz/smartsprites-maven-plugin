@@ -30,9 +30,9 @@ import org.carrot2.labs.smartsprites.message.PrintStreamMessageSink;
 
 /**
  * Goal which creates Spritesheets from given css and image files Explanation of every variable is taken directly from
- * the smartsprites documentation (http://csssprites.org/)
+ * the smartsprites documentation (https://www.w3schools.com/css/css_image_sprites.asp)
  * <p>
- * For further information on the use of smartsprites please refer to: http://csssprites.org/
+ * For further information on the use of smartsprites please refer to: https://www.w3schools.com/css/css_image_sprites.asp
  */
 @Mojo(name = "smartsprites", defaultPhase = LifecyclePhase.GENERATE_RESOURCES, requiresProject = false, threadSafe = true)
 public class SmartSpritesMojo extends AbstractMojo {
