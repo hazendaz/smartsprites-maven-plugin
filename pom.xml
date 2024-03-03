@@ -28,10 +28,8 @@
     <packaging>maven-plugin</packaging>
 
     <name>smartsprites-maven-plugin</name>
-    <description>
-      Maven Plugin for the open-source tool smartsprites (https://www.w3schools.com/css/css_image_sprites.asp).
-      It allows you the integration of the generation of spritesheets in your build process.
-    </description>
+    <description>Maven Plugin for the open-source tool smartsprites (https://www.w3schools.com/css/css_image_sprites.asp).
+      It allows you the integration of the generation of spritesheets in your build process.</description>
     <url>http://github.com/hazendaz/smartsprites-maven-plugin</url>
     <inceptionYear>2012</inceptionYear>
     <licenses>
@@ -45,10 +43,10 @@
     </prerequisites>
 
     <scm>
-        <url>https://github.com/hazendaz/smartsprites-maven-plugin</url>
         <connection>scm:git:ssh://git@github.com/hazendaz/smartsprites-maven-plugin.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/hazendaz/smartsprites-maven-plugin.git</developerConnection>
         <tag>HEAD</tag>
+        <url>https://github.com/hazendaz/smartsprites-maven-plugin</url>
     </scm>
     <issueManagement>
         <system>GitHub Issue Management</system>
