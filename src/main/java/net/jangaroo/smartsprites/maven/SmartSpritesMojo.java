@@ -127,22 +127,6 @@ public class SmartSpritesMojo extends AbstractMojo {
     private String spritePngDepth;
 
     /**
-     * Enables generation of IE6-friendly sprite images, optional, default: disabled.
-     * <p>
-     * If sprite-png-ie6 is specified, for each PNG sprite image with partial transparencies (alpha channel) or more
-     * than 255 colors and any transparencies, SmartSprites will generate a corresponding color-reduced PNG8 file for
-     * IE6.
-     * <p>
-     * An extra IE6-only CSS rule will be added to the generated CSS file to ensure that IE6 (and only IE6) uses the
-     * color-reduced version: #web { width: 17px; height: 17px; background-repeat: no-repeat; background-image:
-     * url('../img/mysprite.png'); -background-image: url('../img/mysprite-ie6.png'); background-position: left -0px; }
-     * <p>
-     * See also the sprite-matte-color property.
-     */
-    @Parameter(defaultValue = "false", property = "spritePngIeSix")
-    private boolean spritePngIeSix;
-
-    /**
      * The encoding to assume for input and output CSS files, default: UTF-8. For the list of allowed values, please see
      * the list of encodings supported in Java.
      */
@@ -182,7 +166,7 @@ public class SmartSpritesMojo extends AbstractMojo {
         try {
             msgLogLevel = Message.MessageLevel.valueOf(this.logLevel.toUpperCase());
         } catch (final Exception e) {
-            throw new MojoExecutionException("LogLevel Error - please select a valid value! (INFO, IE6NOTICE, WARN) ",
+            throw new MojoExecutionException("LogLevel Error - please select a valid value! (INFO, WARN) ",
                     e);
         }
 
@@ -263,7 +247,7 @@ public class SmartSpritesMojo extends AbstractMojo {
         // Configure the SmartSpritesParameters for execution
         SmartSpritesParameters smartParameters = new SmartSpritesParameters(rootDirPathTemp, cssFilesTemp,
                 outputDirPathTemp, documentRootDirPathTemp, msgLogLevel, this.cssFileSuffix, pngDepth,
-                this.spritePngIeSix, this.cssFileEncoding);
+                this.cssFileEncoding);
 
         final MessageLog messageLog = new MessageLog(
                 new PrintStreamMessageSink(System.out, smartParameters.getLogLevel()));
