@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2022 Hazendaz.
+ * Copyright (c) 2012-2024 Hazendaz.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of The Apache Software License,
@@ -32,7 +32,8 @@ import org.carrot2.labs.smartsprites.message.PrintStreamMessageSink;
  * Goal which creates Spritesheets from given css and image files Explanation of every variable is taken directly from
  * the smartsprites documentation (https://www.w3schools.com/css/css_image_sprites.asp)
  * <p>
- * For further information on the use of smartsprites please refer to: https://www.w3schools.com/css/css_image_sprites.asp
+ * For further information on the use of smartsprites please refer to:
+ * https://www.w3schools.com/css/css_image_sprites.asp
  */
 @Mojo(name = "smartsprites", defaultPhase = LifecyclePhase.GENERATE_RESOURCES, requiresProject = false, threadSafe = true)
 public class SmartSpritesMojo extends AbstractMojo {
@@ -174,8 +175,7 @@ public class SmartSpritesMojo extends AbstractMojo {
         try {
             msgLogLevel = Message.MessageLevel.valueOf(this.logLevel.toUpperCase());
         } catch (final Exception e) {
-            throw new MojoExecutionException("LogLevel Error - please select a valid value! (INFO, WARN) ",
-                    e);
+            throw new MojoExecutionException("LogLevel Error - please select a valid value! (INFO, WARN) ", e);
         }
 
         // Check for the correct PNG-Depth
