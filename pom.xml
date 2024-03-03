@@ -66,6 +66,17 @@
         </site>
     </distributionManagement>
 
+    <properties>
+        <!-- Checkstyle -->
+        <checkstyle.config>checkstyle-4space.xml</checkstyle.config>
+
+        <!-- Automatic Module Name -->
+        <module.name>com.github.hazendaz.maven.smartsprites</module.name>
+
+        <!-- Reproducible Builds -->
+        <project.build.outputTimestamp>1701226713</project.build.outputTimestamp>
+    </properties>
+
     <dependencies>
         <!-- Maven -->
         <dependency>
