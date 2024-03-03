@@ -106,11 +106,19 @@ public class SmartSpritesMojo extends AbstractMojo {
     /**
      * Message logging level, optional, default: WARN.
      * <p>
-     * Messages less important than log-level will not be shown. SmartSprites has 3 levels of log messages (in the
-     * increasing order of importance): INFO: information messages, can be safely ignored IE6NOTICE: notices related to
-     * possible quality loss when creating IE6-friendly sprite images, see also the IE6-friendly PNG option WARN:
-     * warnings related to syntax, IO and sprite rendering quality loss problems that may cause the converted
-     * sprite-based designs look broken
+     * Messages less important than log-level will not be shown.
+     * <p>
+     * SmartSprites has 5 levels of log messages (in the increasing order of importance).
+     * <p>
+     * INFO: information messages, can be safely ignored.
+     * <p>
+     * DEPRECATION: Notice messages related to deprecated features.
+     * <p>
+     * WARN: Warning messages, ignoring can lead to the converted designs looking broken.
+     * <p>
+     * ERROR: Error messages, SmartSprites cannot perform processing.
+     * <p>
+     * STATUS: Status messages displayed at the end of processing.
      */
     @Parameter(defaultValue = "WARN", property = "logLevel")
     private String logLevel;
