@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -173,7 +174,7 @@ public class SmartSpritesMojo extends AbstractMojo {
         // Check for the correct log-level
         Message.MessageLevel msgLogLevel;
         try {
-            msgLogLevel = Message.MessageLevel.valueOf(this.logLevel.toUpperCase());
+            msgLogLevel = Message.MessageLevel.valueOf(this.logLevel.toUpperCase(Locale.ENGLISH));
         } catch (final Exception e) {
             throw new MojoExecutionException("LogLevel Error - please select a valid value! (INFO, WARN) ", e);
         }
@@ -247,7 +248,7 @@ public class SmartSpritesMojo extends AbstractMojo {
             }
             rootDirPathTemp = null;
             outputDirPathTemp = null;
-        } else if (this.workingMode.equals("cssFilesWithOutputDirMode") && this.cssFiles == null
+        } else if ((this.workingMode.equals("cssFilesWithOutputDirMode") && this.cssFiles == null)
                 || this.rootDirPath == null || this.outputDirPath == null) {
             throw new MojoExecutionException("Please configure cssFiles and/or a rootDirPath and/or an outputDirPath");
         }
