@@ -1,2 +1,3 @@
+module:com.github.hazendaz.maven.smartsprites
 com.github.hazendaz.maven.smartsprites_maven_plugin
 net.jangaroo.smartsprites.maven
