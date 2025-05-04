@@ -25,7 +25,7 @@
 
     <groupId>com.github.hazendaz.maven</groupId>
     <artifactId>smartsprites-maven-plugin</artifactId>
-    <version>2.4.0</version>
+    <version>2.4.1-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
 
     <name>smartsprites-maven-plugin</name>
@@ -46,7 +46,7 @@
     <scm>
         <connection>scm:git:ssh://git@github.com/hazendaz/smartsprites-maven-plugin.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/hazendaz/smartsprites-maven-plugin.git</developerConnection>
-        <tag>smartsprites-maven-plugin-2.4.0</tag>
+        <tag>HEAD</tag>
         <url>https://github.com/hazendaz/smartsprites-maven-plugin</url>
     </scm>
     <issueManagement>
@@ -77,7 +77,7 @@
         <module.name>com.github.hazendaz.maven.smartsprites</module.name>
 
         <!-- Reproducible Builds -->
-        <project.build.outputTimestamp>1746378280</project.build.outputTimestamp>
+        <project.build.outputTimestamp>1746378309</project.build.outputTimestamp>
     </properties>
 
     <dependencies>
