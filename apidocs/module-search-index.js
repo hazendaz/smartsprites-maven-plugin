@@ -1,1 +1,1 @@
-moduleSearchIndex = [{"l":"com.github.hazendaz.maven.smartsprites"}];updateSearchResults();
+moduleSearchIndex = [];updateSearchResults();

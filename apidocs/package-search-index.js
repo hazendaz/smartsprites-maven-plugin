@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"m":"com.github.hazendaz.maven.smartsprites","l":"com.github.hazendaz.maven.smartsprites_maven_plugin"},{"m":"com.github.hazendaz.maven.smartsprites","l":"net.jangaroo.smartsprites.maven"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html","k":"18"},{"l":"com.github.hazendaz.maven.smartsprites_maven_plugin"},{"l":"net.jangaroo.smartsprites.maven"}];updateSearchResults();
