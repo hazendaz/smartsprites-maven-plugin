@@ -73,6 +73,8 @@
         <!-- Checkstyle -->
         <checkstyle.config>checkstyle-4space.xml</checkstyle.config>
 
+        <checker-qual.version>3.55.1</checker-qual.version>
+
         <!-- Automatic Module Name -->
         <module.name>com.github.hazendaz.maven.smartsprites</module.name>
 
@@ -80,6 +82,16 @@
         <project.build.outputTimestamp>1765145259</project.build.outputTimestamp>
     </properties>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.checkerframework</groupId>
+                <artifactId>checker-qual</artifactId>
+                <version>${checker-qual.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    
     <dependencies>
         <!-- Maven -->
         <dependency>
