@@ -73,7 +73,7 @@
         <!-- Checkstyle -->
         <checkstyle.config>checkstyle-4space.xml</checkstyle.config>
 
-        <checker-qual.version>3.55.1</checker-qual.version>
+        <checker-qual.version>4.0.0</checker-qual.version>
 
         <!-- Automatic Module Name -->
         <module.name>com.github.hazendaz.maven.smartsprites</module.name>
