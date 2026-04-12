@@ -2,6 +2,7 @@ SmartSprites Maven plugin
 =========================
 
 [![Java CI](https://github.com/hazendaz/smartsprites-maven-plugin/actions/workflows/ci.yaml/badge.svg)](https://github.com/hazendaz/smartsprites-maven-plugin/actions/workflows/ci.yaml)
+[![Coverage Status](https://coveralls.io/repos/github/hazendaz/smartsprites-maven-plugin/badge.svg?branch=master)](https://coveralls.io/github/hazendaz/smartsprites-maven-plugin?branch=master)
 [![Maven Central](https://img.shields.io/maven-central/v/com.github.hazendaz.maven/smartsprites-maven-plugin.svg)](https://central.sonatype.com/artifact/com.github.hazendaz.maven/spartsprites-maven-plugin)
 [![License](http://img.shields.io/badge/license-Apache%202-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
