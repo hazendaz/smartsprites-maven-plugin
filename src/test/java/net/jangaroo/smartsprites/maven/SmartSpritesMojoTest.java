@@ -15,7 +15,11 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 
 import org.apache.maven.api.plugin.testing.InjectMojo;
 import org.apache.maven.api.plugin.testing.MojoExtension;
@@ -90,6 +94,68 @@ class SmartSpritesMojoTest {
             throws IllegalAccessException {
         MojoExtension.setVariableValueToObject(mojo, "rootDirPath", tempDir.toFile());
         MojoExtension.setVariableValueToObject(mojo, "outputDirPath", tempDir.resolve("output").toFile());
+        assertDoesNotThrow(mojo::execute);
+    }
+
+    /**
+     * Using cssFilesMode with an empty cssFiles list should succeed without processing.
+     */
+    @Test
+    @InjectMojo(goal = "smartsprites")
+    @MojoParameter(name = "workingMode", value = "cssFilesMode")
+    void testCssFilesModeWithEmptyFilesListSucceeds(SmartSpritesMojo mojo) throws IllegalAccessException {
+        MojoExtension.setVariableValueToObject(mojo, "cssFiles", List.of());
+        assertDoesNotThrow(mojo::execute);
+    }
+
+    /**
+     * Using cssFilesMode with a missing CSS file must fail.
+     */
+    @Test
+    @InjectMojo(goal = "smartsprites")
+    void testCssFilesModeWithMissingCssFileThrowsException(SmartSpritesMojo mojo) throws IllegalAccessException {
+        MojoExtension.setVariableValueToObject(mojo, "workingMode", "cssFilesMode");
+        MojoExtension.setVariableValueToObject(mojo, "cssFiles", List.of(new File("/non/existent.css")));
+        assertThrows(MojoExecutionException.class, mojo::execute);
+    }
+
+    /**
+     * Using cssFilesWithOutputDirMode without required configuration must fail.
+     */
+    @Test
+    @InjectMojo(goal = "smartsprites")
+    void testCssFilesWithOutputDirModeWithoutRequiredValuesThrowsException(SmartSpritesMojo mojo)
+            throws IllegalAccessException {
+        MojoExtension.setVariableValueToObject(mojo, "workingMode", "cssFilesWithOutputDirMode");
+        MojoExtension.setVariableValueToObject(mojo, "cssFiles", List.of());
+        MojoExtension.setVariableValueToObject(mojo, "rootDirPath", null);
+        assertThrows(MojoExecutionException.class, mojo::execute);
+    }
+
+    /**
+     * rootDirMode with an explicit null rootDirPath must fail.
+     */
+    @Test
+    @InjectMojo(goal = "smartsprites")
+    void testRootDirModeWithNullRootDirPathThrowsException(SmartSpritesMojo mojo) throws IllegalAccessException {
+        MojoExtension.setVariableValueToObject(mojo, "rootDirPath", null);
+        assertThrows(MojoExecutionException.class, mojo::execute);
+    }
+
+    /**
+     * cssFilesMode with a real CSS file and documentRootDirPath set should succeed.
+     */
+    @Test
+    @InjectMojo(goal = "smartsprites")
+    void testCssFilesModeSucceedsWithExistingCssFileAndDocumentRoot(SmartSpritesMojo mojo, @TempDir Path tempDir)
+            throws IllegalAccessException, IOException {
+        Path cssFile = tempDir.resolve("style.css");
+        Files.writeString(cssFile, ".sample{color:black;}", StandardCharsets.UTF_8);
+
+        MojoExtension.setVariableValueToObject(mojo, "workingMode", "cssFilesMode");
+        MojoExtension.setVariableValueToObject(mojo, "cssFiles", List.of(cssFile.toFile()));
+        MojoExtension.setVariableValueToObject(mojo, "documentRootDirPath", tempDir.toFile());
+
         assertDoesNotThrow(mojo::execute);
     }
 }
