@@ -174,15 +174,15 @@
 
     <profiles>
         <profile>
-            <!-- Maven 4 with compiler plugin 4.x: base-parent's maven4 profile adds ErrorProne as
-                 a *plugin* dependency with type=classpath-processor. Plugin dependencies go into
-                 the Maven plugin classloader, which the forked javac (fork=true) cannot access,
-                 so -Xplugin:ErrorProne fails with "plug-in not found".
-                 The fix: add error_prone_core as a *project* dependency with type=classpath-processor.
-                 Maven 4's DependencyResolver maps this to JavaPathType.PROCESSOR_CLASSES, which
-                 becomes the forked javac's -processorpath. ServiceLoader finds the plugin there,
-                 and -Xplugin:ErrorProne works. fork=true and the -J add-exports/add-opens from
-                 base-parent are inherited unchanged.
+            <!-- Maven 4 + compiler plugin 4.x: base-parent's maven4 profile provides ErrorProne via
+                 a classpath-processor plugin dependency, placing it in the Maven plugin classloader.
+                 With the inherited fork=true, the forked javac process cannot access the plugin
+                 classloader, so -Xplugin:ErrorProne fails. Setting fork=false makes javac run
+                 in-process within Maven's JVM, where the plugin classloader is directly accessible.
+                 The -J prefixed flags in base-parent's compilerArgs are JVM-level args forwarded
+                 only to a forked javac process; they are invalid for in-process javac via
+                 JavaCompiler.getTask(). Override compilerArgs to keep the javac-level ErrorProne
+                 flags while dropping the JVM forwarding flags.
                  NOTE: Activation mirrors base-parent's maven4 profile (4.0.0-rc-5). Both must be
                  updated together for future Maven 4 releases. -->
             <id>maven4</id>
@@ -192,15 +192,38 @@
                     <value>4.0.0-rc-5</value>
                 </property>
             </activation>
-            <dependencies>
-                <dependency>
-                    <groupId>com.google.errorprone</groupId>
-                    <artifactId>error_prone_core</artifactId>
-                    <version>${error-prone.version}</version>
-                    <type>classpath-processor</type>
-                    <scope>provided</scope>
-                </dependency>
-            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <configuration>
+                            <fork>false</fork>
+                            <compilerArgs combine.children="override">
+                                <compilerArg>-XDaddTypeAnnotationsToSymbol=true</compilerArg>
+                                <compilerArg>-XDcompilePolicy=simple</compilerArg>
+                                <compilerArg>--should-stop=ifError=FLOW</compilerArg>
+                                <compilerArg>-Xplugin:ErrorProne ${error-prone.failOnViolations} ${error-prone.skipGeneratedCode}</compilerArg>
+                            </compilerArgs>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <!-- git-commit-id-maven-plugin 10.x requires Maven 3.9.0+. When testing with Maven 3.6.3,
+                 override to 9.0.2 which supports Maven 3.6.3+ (requiredMavenVersion=[3.6.3,)).
+                 NOTE: Activation mirrors the Maven 3.6.3 CI workflow exactly. -->
+            <id>maven363</id>
+            <activation>
+                <property>
+                    <name>maven.version</name>
+                    <value>3.6.3</value>
+                </property>
+            </activation>
+            <properties>
+                <git-commit.plugin>9.0.2</git-commit.plugin>
+            </properties>
         </profile>
     </profiles>
 
