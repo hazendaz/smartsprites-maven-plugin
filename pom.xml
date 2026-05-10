@@ -175,15 +175,14 @@
     <profiles>
         <profile>
             <!-- Maven 4 with compiler plugin 4.x: base-parent's maven4 profile adds ErrorProne as
-                 a plugin dependency with type=classpath-processor. This is the Maven 4 replacement
-                 for annotationProcessorPaths and places the JAR in the Maven plugin classloader.
-                 With fork=true, the forked javac process runs in its own JVM and cannot access the
-                 plugin classloader, so -Xplugin:ErrorProne fails with "plug-in not found".
-                 The fix: set fork=false so javac runs in-process within Maven's JVM. The plugin
-                 classloader (containing ErrorProne via classpath-processor) is the context
-                 classloader for in-process javac, allowing -Xplugin:ErrorProne to be found via
-                 ServiceLoader. The add-exports and add-opens required by ErrorProne are provided
-                 via .mvn/jvm.config since the -J args in compilerArgs are ignored when fork=false.
+                 a *plugin* dependency with type=classpath-processor. Plugin dependencies go into
+                 the Maven plugin classloader, which the forked javac (fork=true) cannot access,
+                 so -Xplugin:ErrorProne fails with "plug-in not found".
+                 The fix: add error_prone_core as a *project* dependency with type=classpath-processor.
+                 Maven 4's DependencyResolver maps this to JavaPathType.PROCESSOR_CLASSES, which
+                 becomes the forked javac's -processorpath. ServiceLoader finds the plugin there,
+                 and -Xplugin:ErrorProne works. fork=true and the -J add-exports/add-opens from
+                 base-parent are inherited unchanged.
                  NOTE: Activation mirrors base-parent's maven4 profile (4.0.0-rc-5). Both must be
                  updated together for future Maven 4 releases. -->
             <id>maven4</id>
@@ -193,17 +192,15 @@
                     <value>4.0.0-rc-5</value>
                 </property>
             </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-compiler-plugin</artifactId>
-                        <configuration>
-                            <fork>false</fork>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
+            <dependencies>
+                <dependency>
+                    <groupId>com.google.errorprone</groupId>
+                    <artifactId>error_prone_core</artifactId>
+                    <version>${error-prone.version}</version>
+                    <type>classpath-processor</type>
+                    <scope>provided</scope>
+                </dependency>
+            </dependencies>
         </profile>
     </profiles>
 
