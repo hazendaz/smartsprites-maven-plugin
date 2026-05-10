@@ -179,7 +179,11 @@
                  dependencies only enter the Maven plugin classloader, NOT the forked javac
                  process (fork=true). This causes "error: plug-in not found: ErrorProne".
                  Override compilerArgs to remove the ErrorProne javac plugin invocation so
-                 Maven 4 builds succeed. ErrorProne continues to run in Maven 3 builds. -->
+                 Maven 4 builds succeed. ErrorProne continues to run in Maven 3 builds.
+                 NOTE: The version activation here intentionally mirrors base-parent's maven4
+                 profile (also activates on 4.0.0-rc-5). Both must be updated together for
+                 newer Maven 4 releases (GA, etc.). Maven property activation does not support
+                 version ranges, so each release requires an explicit value. -->
             <id>maven4</id>
             <activation>
                 <property>
