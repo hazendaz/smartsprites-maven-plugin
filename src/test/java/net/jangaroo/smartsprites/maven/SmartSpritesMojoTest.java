@@ -32,6 +32,9 @@ class SmartSpritesMojoTest {
 
     /**
      * When {@code skip=true} the mojo must return without executing any processing.
+     *
+     * @param mojo
+     *            the mojo
      */
     @Test
     @InjectMojo(goal = "smartsprites")
@@ -42,6 +45,9 @@ class SmartSpritesMojoTest {
 
     /**
      * An unrecognised log level must cause a {@link MojoExecutionException}.
+     *
+     * @param mojo
+     *            the mojo
      */
     @Test
     @InjectMojo(goal = "smartsprites")
@@ -52,6 +58,9 @@ class SmartSpritesMojoTest {
 
     /**
      * An unrecognised PNG depth value must cause a {@link MojoExecutionException}.
+     *
+     * @param mojo
+     *            the mojo
      */
     @Test
     @InjectMojo(goal = "smartsprites")
@@ -62,6 +71,9 @@ class SmartSpritesMojoTest {
 
     /**
      * An unrecognised working mode must cause a {@link MojoExecutionException}.
+     *
+     * @param mojo
+     *            the mojo
      */
     @Test
     @InjectMojo(goal = "smartsprites")
@@ -72,6 +84,12 @@ class SmartSpritesMojoTest {
 
     /**
      * Using rootDirMode with a rootDirPath that does not exist must cause a {@link MojoExecutionException}.
+     *
+     * @param mojo
+     *            the mojo
+     *
+     * @throws IllegalAccessException
+     *             the illegal access exception
      */
     @Test
     @InjectMojo(goal = "smartsprites")
@@ -82,6 +100,14 @@ class SmartSpritesMojoTest {
 
     /**
      * Using rootDirMode with an empty directory must complete successfully without processing any sprites.
+     *
+     * @param mojo
+     *            the mojo
+     * @param tempDir
+     *            the temp dir
+     *
+     * @throws IllegalAccessException
+     *             the illegal access exception
      */
     @Test
     @InjectMojo(goal = "smartsprites")
@@ -94,6 +120,12 @@ class SmartSpritesMojoTest {
 
     /**
      * Using cssFilesMode with an empty cssFiles list should succeed without processing.
+     *
+     * @param mojo
+     *            the mojo
+     *
+     * @throws IllegalAccessException
+     *             the illegal access exception
      */
     @Test
     @InjectMojo(goal = "smartsprites")
@@ -105,6 +137,12 @@ class SmartSpritesMojoTest {
 
     /**
      * Using cssFilesMode with a missing CSS file must fail.
+     *
+     * @param mojo
+     *            the mojo
+     *
+     * @throws IllegalAccessException
+     *             the illegal access exception
      */
     @Test
     @InjectMojo(goal = "smartsprites")
@@ -116,6 +154,12 @@ class SmartSpritesMojoTest {
 
     /**
      * Using cssFilesWithOutputDirMode without required configuration must fail.
+     *
+     * @param mojo
+     *            the mojo
+     *
+     * @throws IllegalAccessException
+     *             the illegal access exception
      */
     @Test
     @InjectMojo(goal = "smartsprites")
@@ -129,6 +173,12 @@ class SmartSpritesMojoTest {
 
     /**
      * rootDirMode with an explicit null rootDirPath must fail.
+     *
+     * @param mojo
+     *            the mojo
+     *
+     * @throws IllegalAccessException
+     *             the illegal access exception
      */
     @Test
     @InjectMojo(goal = "smartsprites")
@@ -139,6 +189,16 @@ class SmartSpritesMojoTest {
 
     /**
      * cssFilesMode with a real CSS file and documentRootDirPath set should succeed.
+     *
+     * @param mojo
+     *            the mojo
+     * @param tempDir
+     *            the temp dir
+     *
+     * @throws IllegalAccessException
+     *             the illegal access exception
+     * @throws IOException
+     *             the io exception
      */
     @Test
     @InjectMojo(goal = "smartsprites")

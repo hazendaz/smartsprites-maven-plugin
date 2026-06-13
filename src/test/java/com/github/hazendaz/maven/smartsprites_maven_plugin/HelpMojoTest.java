@@ -24,14 +24,26 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-class HelpMojoTest {
+/**
+ * The Class HelpMojoTest.
+ */
+public class HelpMojoTest {
 
+    /**
+     * Test execute with default parameters.
+     */
     @Test
     void testExecuteWithDefaultParameters() {
         HelpMojo mojo = new HelpMojo();
         assertDoesNotThrow(mojo::execute);
     }
 
+    /**
+     * Test execute with detail and goal.
+     *
+     * @throws ReflectiveOperationException
+     *             the reflective operation exception
+     */
     @Test
     void testExecuteWithDetailAndGoal() throws ReflectiveOperationException {
         HelpMojo mojo = new HelpMojo();
@@ -43,6 +55,12 @@ class HelpMojoTest {
         assertDoesNotThrow(mojo::execute);
     }
 
+    /**
+     * Test get single child throws for missing and multiple.
+     *
+     * @throws Exception
+     *             the exception
+     */
     @Test
     void testGetSingleChildThrowsForMissingAndMultiple() throws Exception {
         Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
@@ -56,6 +74,12 @@ class HelpMojoTest {
         assertThrows(MojoExecutionException.class, () -> invoke(getSingleChild, null, root, "a"));
     }
 
+    /**
+     * Test find single child returns null when missing.
+     *
+     * @throws Exception
+     *             the exception
+     */
     @Test
     void testFindSingleChildReturnsNullWhenMissing() throws Exception {
         Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
@@ -68,6 +92,12 @@ class HelpMojoTest {
         assertNull(child);
     }
 
+    /**
+     * Test get property from expression variants.
+     *
+     * @throws Exception
+     *             the exception
+     */
     @Test
     void testGetPropertyFromExpressionVariants() throws Exception {
         Method method = method("getPropertyFromExpression", String.class);
@@ -76,6 +106,12 @@ class HelpMojoTest {
         assertNull(invoke(method, null, "plain-value"));
     }
 
+    /**
+     * Test to lines wraps and normalizes whitespace.
+     *
+     * @throws Exception
+     *             the exception
+     */
     @Test
     @SuppressWarnings("unchecked")
     void testToLinesWrapsAndNormalizesWhitespace() throws Exception {
@@ -86,12 +122,40 @@ class HelpMojoTest {
         assertTrue(lines.stream().noneMatch(line -> line.contains("\u00A0")));
     }
 
+    /**
+     * Method.
+     *
+     * @param name
+     *            the name
+     * @param parameterTypes
+     *            the parameter types
+     *
+     * @return the method
+     *
+     * @throws ReflectiveOperationException
+     *             the reflective operation exception
+     */
     private static Method method(String name, Class<?>... parameterTypes) throws ReflectiveOperationException {
         Method method = HelpMojo.class.getDeclaredMethod(name, parameterTypes);
         method.setAccessible(true);
         return method;
     }
 
+    /**
+     * Invoke.
+     *
+     * @param method
+     *            the method
+     * @param target
+     *            the target
+     * @param args
+     *            the args
+     *
+     * @return the object
+     *
+     * @throws Exception
+     *             the exception
+     */
     private static Object invoke(Method method, Object target, Object... args) throws Exception {
         try {
             return method.invoke(target, args);
@@ -103,6 +167,19 @@ class HelpMojoTest {
         }
     }
 
+    /**
+     * Set field.
+     *
+     * @param target
+     *            the target
+     * @param fieldName
+     *            the field name
+     * @param value
+     *            the value
+     *
+     * @throws ReflectiveOperationException
+     *             the reflective operation exception
+     */
     private static void setField(Object target, String fieldName, Object value) throws ReflectiveOperationException {
         Field field = target.getClass().getDeclaredField(fieldName);
         field.setAccessible(true);
