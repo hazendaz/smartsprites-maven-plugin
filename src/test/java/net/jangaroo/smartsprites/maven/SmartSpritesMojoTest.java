@@ -1,13 +1,8 @@
 /*
- * Copyright (c) 2012-2026 Hazendaz.
+ * SPDX-License-Identifier: Apache-2.0
+ * See LICENSE file for details.
  *
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of The Apache Software License,
- * Version 2.0 which accompanies this distribution, and is available at
- * http://www.apache.org/licenses/LICENSE-2.0.txt
- *
- * Contributors:
- *     Hazendaz (Jeremy Landis).
+ * Copyright 2012-2026 Hazendaz
  */
 package net.jangaroo.smartsprites.maven;
 
