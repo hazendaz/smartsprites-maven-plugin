@@ -1,0 +1,1 @@
+memberSearchIndex = [{"p":"com.github.hazendaz.maven.smartsprites_maven_plugin","c":"HelpMojoTest","l":"HelpMojoTest()","u":"%3Cinit%3E()","k":"3"}];updateSearchResults();

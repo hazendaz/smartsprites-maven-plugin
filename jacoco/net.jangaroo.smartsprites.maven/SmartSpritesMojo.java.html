@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SmartSpritesMojo.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">smartsprites-maven-plugin</a> &gt; <a href="index.source.html" class="el_package">net.jangaroo.smartsprites.maven</a> &gt; <span class="el_source">SmartSpritesMojo.java</span></div><h1>SmartSpritesMojo.java</h1><pre class="source lang-java linenums">/*
+ * SPDX-License-Identifier: Apache-2.0
+ * See LICENSE file for details.
+ *
+ * Copyright 2012-2026 Hazendaz
+ */
+package net.jangaroo.smartsprites.maven;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
+import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
+import org.carrot2.labs.smartsprites.SmartSpritesParameters;
+import org.carrot2.labs.smartsprites.SpriteBuilder;
+import org.carrot2.labs.smartsprites.message.Message;
+import org.carrot2.labs.smartsprites.message.MessageLog;
+import org.carrot2.labs.smartsprites.message.PrintStreamMessageSink;
+
+/**
+ * Goal which creates Spritesheets from given css and image files Explanation of every variable is taken directly from
+ * the smartsprites documentation (https://www.w3schools.com/css/css_image_sprites.asp)
+ * &lt;p&gt;
+ * For further information on the use of smartsprites please refer to:
+ * https://www.w3schools.com/css/css_image_sprites.asp
+ */
+@Mojo(name = &quot;smartsprites&quot;, defaultPhase = LifecyclePhase.GENERATE_RESOURCES, requiresProject = false, threadSafe = true)
+<span class="fc" id="L35">public class SmartSpritesMojo extends AbstractMojo {</span>
+
+    /** The static root directory mode. */
+    private static final String ROOT_DIR_MODE = &quot;rootDirMode&quot;;
+
+    /** The static css files mode. */
+    private static final String CSS_FILES_MODE = &quot;cssFilesMode&quot;;
+
+    /**
+     * Directory in which SmartSprites processing should be done, required if css-files not specified or if
+     * output-dir-path specified, default: not specified.
+     * &lt;p&gt;
+     * SmartSprites will process all files with the *.css extension found in root-dir-path or any subdirectory of it.
+     * For more fine-grained control over the processed CSS files, see the css-files option.
+     * &lt;p&gt;
+     * If the provided root directory path is relative, it will be resolved against the current working directory.
+     */
+    @Parameter(defaultValue = &quot;${project.basedir}/src/main/sprites&quot;, property = &quot;rootDirPath&quot;)
+    private File rootDirPath;
+
+    /**
+     * Paths of CSS files to process, required if root-dir-path not specified, default: not specified.
+     * &lt;p&gt;
+     * SmartSprites will process all CSS files listed using this option. If css-files is to be used together with
+     * output-dir-path, root-dir-path must also be specified so that SmartSprites can preserve the directory structure
+     * found in root-dir-path in output-dir-path. If root-dir-path and output-dir-path are used, css-files outside of
+     * root-dir-path will be ignored.
+     * &lt;p&gt;
+     * Relative CSS file paths provided using this option will be resolved against the current working directory. Please
+     * note that SmartSprites will not expand any wildcards (like style/*.css), it assumes the expansion is performed at
+     * the command line shell level.
+     * &lt;p&gt;
+     * To specify the list of CSS files to process in the SmartSprites Ant task, use one or more nested fileset
+     * elements. Please see the build.xml file in the distribution archive for an example.
+     */
+    @Parameter(property = &quot;cssFiles&quot;)
+    private List&lt;File&gt; cssFiles;
+
+    /**
+     * Output directory for processed CSS files and CSS-relative sprite images, optional, default: not specified.
+     * &lt;p&gt;
+     * If a non-empty output-dir-path is specified, a non-empty root-dir-path must also be provided. The directory
+     * structure relative to the root-dir-path will be preserved in the output directory. E.g. if CSS files are
+     * contained in the css/base directory of root-dir-path, the processed results will be written to
+     * output-dir-path/css/base. Also, CSS-relative sprite images will be written to the output directory. Sprite images
+     * with document-root-relative URLs will be written relative to the document-root-dir-path. If the output-dir-path
+     * directory does not exist, it will be created. If the provided output directory path is relative, it will be
+     * resolved against the current working directory.
+     * &lt;p&gt;
+     * You can leave the output-dir-path empty, in which case the CSS files will be written next to the original CSS
+     * files with the css-file-suffix, and sprite images will be written relative to the original CSS files. If you are
+     * using a non-empty output-dir-path, you might want to use an empty css-file-suffix.
+     */
+    @Parameter(defaultValue = &quot;${project.build.directory}/generated-resources/META-INF/resources/spritesheets&quot;, property = &quot;outPutDirPath&quot;)
+    private File outputDirPath;
+
+    /**
+     * Document root path for document-root-relative (starting with /) image urls in CSS, optional, default: not
+     * specified.
+     * &lt;p&gt;
+     * All document-root-relative image and sprite URLs will be taken relative to document-root-dir-path. Also
+     * document-root-relative sprite URLs will be written relative to document-root-dir-path. You can leave this
+     * property empty if your CSS uses only CSS-relative image URLs. If the provided document root directory path is
+     * relative, it will be resolved against the current working directory.
+     */
+    @Parameter(property = &quot;documentRootDirPath&quot;)
+    private File documentRootDirPath;
+
+    /**
+     * Message logging level, optional, default: WARN.
+     * &lt;p&gt;
+     * Messages less important than log-level will not be shown.
+     * &lt;p&gt;
+     * SmartSprites has 5 levels of log messages (in the increasing order of importance).
+     * &lt;p&gt;
+     * INFO: information messages, can be safely ignored.
+     * &lt;p&gt;
+     * DEPRECATION: Notice messages related to deprecated features.
+     * &lt;p&gt;
+     * WARN: Warning messages, ignoring can lead to the converted designs looking broken.
+     * &lt;p&gt;
+     * ERROR: Error messages, SmartSprites cannot perform processing.
+     * &lt;p&gt;
+     * STATUS: Status messages displayed at the end of processing.
+     */
+    @Parameter(defaultValue = &quot;WARN&quot;, property = &quot;logLevel&quot;)
+    private String logLevel;
+
+    /**
+     * Color depth of sprites in the PNG format, optional, default: AUTO. AUTO: PNG color depth will be chosen
+     * automatically. If the sprite image does not contain partial transparencies (alpha channel) and has less than 256
+     * colors, PNG8 will be used. Otherwise, the sprite will be saved in PNG24. DIRECT: PNG sprites will always be saved
+     * in the PNG24 format. INDEXED: PNG sprites will always be saved in the PNG8 format. If the sprite image contains
+     * partial transparencies (alpha channel) or has more than 255 colors, image quality loss may occur and appropriate
+     * warnings will be issued. See also the sprite-matte-color property.
+     */
+    @Parameter(defaultValue = &quot;AUTO&quot;, property = &quot;spritePngDepth&quot;)
+    private String spritePngDepth;
+
+    /**
+     * The encoding to assume for input and output CSS files, default: UTF-8. For the list of allowed values, please see
+     * the list of encodings supported in Java.
+     */
+    @Parameter(defaultValue = &quot;UTF-8&quot;, property = &quot;cssFileEncoding&quot;)
+    private String cssFileEncoding;
+
+    /**
+     * Suffix to be appended to the processed CSS file name, optional, default: .
+     */
+    @Parameter(defaultValue = &quot;&quot;, property = &quot;cssFileSuffix&quot;)
+    private String cssFileSuffix;
+
+    /**
+     * To make sure the different modes are working correctly a mode has to be specified. Modes: - rootDirMode (rootDir
+     * is set, optionally outputdir! No css-Files!) - cssFilesMode (only cssFiles is set, no rootDir, no OutputDir) -
+     * cssFilesWithOutputDirMode (cssFiles are set, as well as rootDir and outputDir)
+     */
+    @Parameter(defaultValue = SmartSpritesMojo.ROOT_DIR_MODE, property = &quot;workingMode&quot;)
+    private String workingMode;
+
+    /**
+     * To enable skipping run of plugin.
+     */
+    @Parameter(defaultValue = &quot;false&quot;, alias = &quot;skip&quot;, property = &quot;skip&quot;)
+    private boolean skip;
+
+    @Override
+    public void execute() throws MojoExecutionException, MojoFailureException {
+        // Check if plugin run should be skipped
+<span class="fc bfc" id="L164" title="All 2 branches covered.">        if (this.skip) {</span>
+<span class="fc" id="L165">            this.getLog().info(&quot;Smartsprites is skipped&quot;);</span>
+<span class="fc" id="L166">            return;</span>
+        }
+
+        // Check for the correct log-level
+        Message.MessageLevel msgLogLevel;
+        try {
+<span class="fc" id="L172">            msgLogLevel = Message.MessageLevel.valueOf(this.logLevel.toUpperCase(Locale.ENGLISH));</span>
+<span class="fc" id="L173">        } catch (final Exception e) {</span>
+<span class="fc" id="L174">            throw new MojoExecutionException(&quot;LogLevel Error - please select a valid value! (INFO, WARN) &quot;, e);</span>
+<span class="fc" id="L175">        }</span>
+
+        // Check for the correct PNG-Depth
+        SmartSpritesParameters.PngDepth pngDepth;
+        try {
+<span class="fc" id="L180">            pngDepth = SmartSpritesParameters.PngDepth.valueOf(this.spritePngDepth);</span>
+<span class="fc" id="L181">        } catch (final Exception e) {</span>
+<span class="fc" id="L182">            throw new MojoExecutionException(&quot;PngDepth Error - please select a valid value! (AUTO, DIRECT, INDEXED)  &quot;,</span>
+                    e);
+<span class="fc" id="L184">        }</span>
+
+        // Make sure we are using only correct workingModes
+<span class="fc bfc" id="L187" title="All 2 branches covered.">        if (!(this.workingMode.equals(SmartSpritesMojo.ROOT_DIR_MODE)</span>
+<span class="fc bfc" id="L188" title="All 2 branches covered.">                || this.workingMode.equals(SmartSpritesMojo.CSS_FILES_MODE)</span>
+<span class="fc bfc" id="L189" title="All 2 branches covered.">                || this.workingMode.equals(&quot;cssFilesWithOutputDirMode&quot;))) {</span>
+<span class="fc" id="L190">            throw new MojoExecutionException(</span>
+                    &quot;workingMode Error - plese select a valid value! (rootDirMode, cssFilesMode, cssFilesWithOutputDirMode)&quot;);
+        }
+
+        // Variables for paths
+<span class="fc" id="L195">        String rootDirPathTemp = &quot;&quot;;</span>
+<span class="fc" id="L196">        String outputDirPathTemp = &quot;&quot;;</span>
+<span class="fc" id="L197">        String documentRootDirPathTemp = &quot;&quot;;</span>
+<span class="fc" id="L198">        List&lt;String&gt; cssFilesTemp = new ArrayList&lt;&gt;();</span>
+
+        // Check if we should set cssFiles to null, or if we are in a working mode
+        // where we want to use cssFiles
+<span class="fc bfc" id="L202" title="All 2 branches covered.">        if (!this.workingMode.equals(SmartSpritesMojo.ROOT_DIR_MODE)) {</span>
+<span class="fc bfc" id="L203" title="All 2 branches covered.">            for (final File cssFile : this.cssFiles) {</span>
+<span class="fc bfc" id="L204" title="All 2 branches covered.">                if (cssFile.exists()) {</span>
+<span class="fc" id="L205">                    cssFilesTemp.add(cssFile.toString());</span>
+                } else {
+<span class="fc" id="L207">                    throw new MojoExecutionException(&quot;The following css-file doesn't exist: &quot; + cssFile);</span>
+                }
+<span class="fc" id="L209">            }</span>
+        } else {
+<span class="fc" id="L211">            this.cssFiles = null;</span>
+        }
+
+        // Check if the folders exist or are at least configured
+<span class="fc bfc" id="L215" title="All 4 branches covered.">        if (this.rootDirPath != null &amp;&amp; !this.workingMode.equals(SmartSpritesMojo.CSS_FILES_MODE)) {</span>
+<span class="fc bfc" id="L216" title="All 2 branches covered.">            if (this.rootDirPath.exists()) {</span>
+<span class="fc" id="L217">                rootDirPathTemp = this.rootDirPath.toString();</span>
+            } else {
+<span class="fc" id="L219">                throw new MojoExecutionException(&quot;The rootDirPath doesn't exist. &quot; + this.rootDirPath.toString());</span>
+            }
+        }
+
+        // Check if the outputDirPath is set
+<span class="pc bpc" id="L224" title="1 of 4 branches missed.">        if (this.outputDirPath != null &amp;&amp; !this.workingMode.equals(SmartSpritesMojo.CSS_FILES_MODE)) {</span>
+<span class="fc" id="L225">            outputDirPathTemp = this.outputDirPath.toString();</span>
+        }
+
+        // Check if the documentRootDirPath is set
+<span class="fc bfc" id="L229" title="All 2 branches covered.">        if (this.documentRootDirPath != null) {</span>
+<span class="fc" id="L230">            documentRootDirPathTemp = this.documentRootDirPath.toString();</span>
+        }
+
+        // Determine which workingMode we are in and check if all conditions for that
+        // specific mode are matched
+<span class="fc bfc" id="L235" title="All 2 branches covered.">        if (this.workingMode.equals(SmartSpritesMojo.ROOT_DIR_MODE)) {</span>
+<span class="fc bfc" id="L236" title="All 2 branches covered.">            if (this.rootDirPath == null) {</span>
+<span class="fc" id="L237">                throw new MojoExecutionException(&quot;Please configure a rootDirPath.&quot;);</span>
+            }
+<span class="fc" id="L239">            cssFilesTemp = null;</span>
+<span class="fc bfc" id="L240" title="All 2 branches covered.">        } else if (this.workingMode.equals(SmartSpritesMojo.CSS_FILES_MODE)) {</span>
+<span class="pc bpc" id="L241" title="1 of 2 branches missed.">            if (this.cssFiles == null) {</span>
+<span class="nc" id="L242">                throw new MojoExecutionException(&quot;Please configure some cssFiles.&quot;);</span>
+            }
+<span class="fc" id="L244">            rootDirPathTemp = null;</span>
+<span class="fc" id="L245">            outputDirPathTemp = null;</span>
+<span class="pc bpc" id="L246" title="5 of 8 branches missed.">        } else if ((this.workingMode.equals(&quot;cssFilesWithOutputDirMode&quot;) &amp;&amp; this.cssFiles == null)</span>
+                || this.rootDirPath == null || this.outputDirPath == null) {
+<span class="fc" id="L248">            throw new MojoExecutionException(&quot;Please configure cssFiles and/or a rootDirPath and/or an outputDirPath&quot;);</span>
+        }
+
+        // Configure the SmartSpritesParameters for execution
+<span class="fc" id="L252">        SmartSpritesParameters smartParameters = new SmartSpritesParameters(rootDirPathTemp, cssFilesTemp,</span>
+                outputDirPathTemp, documentRootDirPathTemp, msgLogLevel, this.cssFileSuffix, pngDepth,
+                this.cssFileEncoding);
+
+<span class="fc" id="L256">        final MessageLog messageLog = new MessageLog(</span>
+<span class="fc" id="L257">                new PrintStreamMessageSink(System.out, smartParameters.getLogLevel()));</span>
+        SpriteBuilder spriteBuilder;
+
+        // Try to execute SmartSprites with the configured parameters and the defined messageLog
+        try {
+<span class="fc" id="L262">            spriteBuilder = new SpriteBuilder(smartParameters, messageLog);</span>
+<span class="fc" id="L263">            spriteBuilder.buildSprites();</span>
+<span class="nc" id="L264">        } catch (final IOException e) {</span>
+<span class="nc" id="L265">            throw new MojoExecutionException(&quot;Smartsprites error: &quot;, e);</span>
+<span class="fc" id="L266">        }</span>
+<span class="fc" id="L267">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

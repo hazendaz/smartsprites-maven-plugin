@@ -1,0 +1,3 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+smartsprites-maven-plugin,net.jangaroo.smartsprites.maven,SmartSpritesMojo,15,232,7,35,3,52,6,17,0,2
+smartsprites-maven-plugin,com.github.hazendaz.maven.smartsprites_maven_plugin,HelpMojo,102,671,32,80,20,136,27,45,0,16
