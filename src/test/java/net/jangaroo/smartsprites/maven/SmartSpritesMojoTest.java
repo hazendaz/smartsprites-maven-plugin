@@ -9,7 +9,6 @@ package net.jangaroo.smartsprites.maven;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -94,7 +93,7 @@ class SmartSpritesMojoTest {
     @Test
     @InjectMojo(goal = "smartsprites")
     void testRootDirPathDoesNotExistThrowsException(SmartSpritesMojo mojo) throws IllegalAccessException {
-        MojoExtension.setVariableValueToObject(mojo, "rootDirPath", new File("/non/existent/directory/path"));
+        MojoExtension.setVariableValueToObject(mojo, "rootDirPath", Path.of("/non/existent/directory/path").toFile());
         assertThrows(MojoExecutionException.class, mojo::execute);
     }
 
@@ -148,7 +147,7 @@ class SmartSpritesMojoTest {
     @InjectMojo(goal = "smartsprites")
     void testCssFilesModeWithMissingCssFileThrowsException(SmartSpritesMojo mojo) throws IllegalAccessException {
         MojoExtension.setVariableValueToObject(mojo, "workingMode", "cssFilesMode");
-        MojoExtension.setVariableValueToObject(mojo, "cssFiles", List.of(new File("/non/existent.css")));
+        MojoExtension.setVariableValueToObject(mojo, "cssFiles", List.of(Path.of("/non/existent.css").toFile()));
         assertThrows(MojoExecutionException.class, mojo::execute);
     }
 
