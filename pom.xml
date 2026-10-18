@@ -77,7 +77,6 @@
         <checker-qual.version>4.3.1</checker-qual.version>
         <commons-logging.version>1.4.0</commons-logging.version>
 
-
         <!-- Automatic Module Name -->
         <module.name>com.github.hazendaz.maven.smartsprites</module.name>
 
