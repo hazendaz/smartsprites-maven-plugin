@@ -70,6 +70,9 @@
         <!-- Checkstyle -->
         <checkstyle.config>checkstyle-4space.xml</checkstyle.config>
 
+        <!-- Jacoco minimum code coverage -->
+        <jacoco.minimum.coverage>0.65</jacoco.minimum.coverage>
+
         <!-- Dependencies -->
         <checker-qual.version>4.3.1</checker-qual.version>
         <commons-logging.version>1.4.0</commons-logging.version>
