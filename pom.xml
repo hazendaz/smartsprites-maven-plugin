@@ -74,7 +74,7 @@
         <jacoco.minimum.coverage>0.65</jacoco.minimum.coverage>
 
         <!-- Dependencies -->
-        <checker-qual.version>4.3.1</checker-qual.version>
+        <checker-qual.version>4.4.0</checker-qual.version>
         <commons-logging.version>1.4.0</commons-logging.version>
         <mockito.version>5.24.0</mockito.version>
         <slf4j.version>2.0.20</slf4j.version>
